@@ -4,12 +4,14 @@ const htmlParser = require("parse5");
 const React = require("react");
 const convertAttr = require("react-attr-converter");
 const styleParser = require("./lib/style-parser");
+const uuidV4 = require("uuid/v4");
 
 const renderNode = (node) => {
   if (node.nodeName === "#text" || node.nodeName = "#comment") {
     return node.value;
   }
 
+  const key = uuidV4();
   const attr = node.attrs.reduce((result, attr) => {
     let name = convertAttr(attr.name);
     result[name] = name === "style" ? styleParser(attr.value) : attr.value;
